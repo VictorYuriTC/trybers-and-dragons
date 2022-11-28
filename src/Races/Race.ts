@@ -4,7 +4,7 @@ abstract class Race {
     private _dexterity: number,
   ) { }
 
-  static get createdRacesInstances(): number {
+  static createdRacesInstances(): number {
     throw new Error('Not implemented');
   }
 
