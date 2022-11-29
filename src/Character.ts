@@ -43,7 +43,7 @@ class Character implements Fighter {
   }
 
   attack(enemy: Fighter): void {
-    console.log(`${this._race.name} attacked ${enemy}`);
+    enemy.receiveDamage(this.strength);
   }
 
   levelUp(): void {
