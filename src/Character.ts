@@ -1,5 +1,6 @@
 import Archetype, { Mage } from './Archetypes';
-import Fighter from './Fighter';
+import Energy from './Energy';
+import Fighter, { SimpleFighter } from './Fighter';
 import Race, { Elf } from './Races';
 import getRandomInt from './utils';
 
@@ -9,6 +10,7 @@ class Character implements Fighter {
   public _lifePoints: number;
   public _defense: number;
   public _strength: number;
+  public _energy: Energy;
 
   constructor(
     name: string,
@@ -20,6 +22,10 @@ class Character implements Fighter {
     this._lifePoints = this._race.maxLifePoints;
     this._defense = getRandomInt(1, 10);
     this._strength = getRandomInt(1, 10);
+    this._energy = { 
+      amount: getRandomInt(1, 10),
+      type_: 'mana',
+    } as Energy;
   }
 
   get race(): Race { return this._race; }
@@ -42,16 +48,20 @@ class Character implements Fighter {
     return this._strength;
   }
 
-  attack(enemy: Fighter): void {
-    enemy.receiveDamage(this.strength);
+  get energy():Energy {
+    return this._energy;
+  }
+
+  attack(enemy: SimpleFighter): void {
+    enemy.receiveDamage(this._strength);
   }
 
   levelUp(): void {
-    console.log(`${this._race.name} has leveled up!`);
+    this._strength += getRandomInt(1, 10);
   }
 
   receiveDamage(attackPoints: number): number {
-    console.log(`$${this._race.name} has received ${attackPoints} as damage`);
+    console.log(`${this._strength} ${attackPoints}`);
     return 10;
   }
 }
